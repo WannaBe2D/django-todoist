@@ -58,7 +58,8 @@ def delete_task(request, task_id):
 def create_task_main(request):
     if request.method == 'POST':
         category = Category.objects.get(pk=request.POST.get('category_select'))
-        task = Task(task_text=request.POST['task'], category=category, pud_date=request.POST['date_task'])
+        task = Task(task_text=request.POST['task'], category=category, pud_date=request.POST['date_task'] if len(request.POST['date_task']) >= 1 else timezone.now())
+        print(request.POST)
         task.save()
         return HttpResponseRedirect(reverse('todo:main_view'))
 
