@@ -1,0 +1,8 @@
+{% extends 'todo/index.html' %}
+
+
+{% block content %}
+    {% for task in task_list %}
+        <div class="myLink"><a href="{% url 'todo:delete_task' task.id %}"><div class="pointerMy" style="height: 16px;width: 16px;border: 1px solid #dcdcdc;border-radius: 50%;"></div></a><p style="margin: 10px;">{{ task.task_text }}</p></div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <title>Привет мир!</title>
+  </head>
+  <body>
+    <style>
+      .myLink {
+        border-bottom: 0.1px solid #ECECEC;
+        width: 800px;
+        display: flex;
+        align-items: center;
+
+      }
+      .pointerMy:hover {
+        background-color:#dcdcdc;
+      }
+
+    </style>
+      <!-- Navbar -->
+      <header>
+            <div style="background-color: #DB4C3F;display: flex;justify-content: space-between;height: 44px;align-items: center;padding-left: 42px;padding-right: 42px;">
+                <div>
+                    <a href="{% url 'todo:main_view' %}"><svg style="color: white;" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12.527 3.075c.35.104.64.263 1.27.876L19.1 9.123c.374.364.49.505.601.678.11.174.185.351.232.552.042.178.062.34.066.742L20 17.718c0 .446-.046.607-.134.77a.906.906 0 01-.378.378c-.163.088-.324.134-.77.134H14v-4.718c0-.446-.046-.607-.134-.77a.906.906 0 00-.378-.378c-.142-.077-.284-.122-.616-.132L12.718 13h-1.436c-.446 0-.607.046-.77.134a.906.906 0 00-.378.378c-.077.142-.122.284-.132.616l-.002.154V19H5.282c-.446 0-.607-.046-.77-.134a.906.906 0 01-.378-.378c-.088-.163-.134-.324-.134-.77v-6.462c0-.522.02-.703.067-.903.047-.2.121-.378.232-.552l.077-.113c.098-.134.233-.282.524-.565l5.304-5.172c.629-.613.92-.772 1.269-.876a1.82 1.82 0 011.054 0zm-.286.958a.825.825 0 00-.482 0c-.18.054-.326.139-.63.418l-.227.216L5.598 9.84c-.3.293-.385.39-.456.5a.76.76 0 00-.102.242c-.026.112-.037.224-.04.531l.002 6.807.005.073.074.006L8.999 18 9 14.268l.003-.17c.013-.448.083-.749.249-1.058a1.9 1.9 0 01.788-.788c.306-.164.6-.234 1.043-.249l.199-.003h1.45l.17.003c.448.013.749.083 1.058.249.337.18.608.45.788.788.164.306.234.6.249 1.043l.003.199L14.999 18l3.92-.002.073-.006.006-.073.002-.2v-6.615l-.005-.218a1.494 1.494 0 00-.035-.305.747.747 0 00-.102-.242l-.059-.084a3.571 3.571 0 00-.294-.315l-5.407-5.273c-.425-.414-.604-.545-.798-.615l-.06-.019z"></path></svg></a>
+                </div>
+                <div>
+                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" style="border: 0; background-color: #DB4C3F;">
+                        <svg style="color: white;" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd" transform="translate(4 3)"><mask id="jd4FBg" fill="#fff"><path d="M9 8h7a.5.5 0 1 1 0 1H9v7a.5.5 0 1 1-1 0V9H1a.5.5 0 0 1 0-1h7V1a.5.5 0 0 1 1 0v7z"></path></mask><g mask="url(#jd4FBg)"><path fill="currentColor" d="M-4-3h24v24H-4z"></path></g></g></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Быстрое добавление задачи</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'todo:create_task_main' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" placeholder="напр., Продлить тренажерный зал" name="task" style="width: 460px;">
+
+                    <div style="display:flex; margin-bottom:10px;">
+                        <input class="form-select form-select-sm" type="date" name="date_task" style="width: 150px; margin-top: 10px;margin-right:10px">
+
+                        <select class="form-select form-select-sm" style="width: 150px; margin-top: 10px;" name="category_select">
+                            {% for category in category_list %}
+                                <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-danger" value="Добавить задачу">
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Добавить проект</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'todo:create_category' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Название" name="category" style="width: 460px;margin-bottom:10px">
+                    <input type="submit" class="btn btn-danger" value="Добавить">
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="right_menu" style="position: absolute;left: 0; background-color: #FAFAFA; width: 350px;height: 100%;padding-top: 30px;">
+        <div class="cat-link" style="width:287px;margin-left:40px;">
+        <p style="padding-top:5px;padding-bottom:5px;margin-bottom:0;"><a href="{% url 'todo:incoming_task' %}" style="text-decoration: none;font-size: 14px;color: #333;":><svg style="color: blue;" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="nonzero"><path d="M10 14.5a2 2 0 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z" opacity="0.1"></path><path d="M8.062 4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path></g></svg> Входящие</a></p>
+        </div>
+        <div class="cat-link" style="width:287px;margin-left:40px;">
+            <p style="padding-top:5px;padding-bottom:5px;margin-bottom:0;"><a href="{% url 'todo:today_task' %}" style="text-decoration: none;font-size: 14px;color: #333;"><svg style="color: green;" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd"><path fill-rule="nonzero" d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v2.5h-15V6A1.5 1.5 0 0 1 6 4.5z" opacity=".1"></path><path fill-rule="nonzero" d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"></path><text font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'" font-size="9" transform="translate(4 2)" font-weight="500"><tspan x="8" y="15" text-anchor="middle">22</tspan></text></g></svg> Сегодня</a></p>
+        </div>
+        <div class="cat-link" style="width:287px;margin-left:40px;">
+            <p style="padding-top:5px;padding-bottom:5px;margin-bottom:0;"><a href="{% url 'todo:future_task' %}" style="text-decoration: none;font-size: 14px;color: #333;"><svg style="color: blueviolet;" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="nonzero"><path d="M6 4.5h12A1.5 1.5 0 0119.5 6v2.5h-15V6A1.5 1.5 0 016 4.5z" opacity="0.1"></path><path d="M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2zm0 1a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1H6zm10 12a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm8-4a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zM7 8h10a.5.5 0 110 1H7a.5.5 0 010-1z"></path></g></svg> Предстоящее</a></p>
+        </div>
+
+        <style>
+        .accordion {
+            background-color: #FAFAFA;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 310px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+            margin-left: 24px;
+            font-size: 14px;
+            font-weight:700;
+        }
+
+
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: left;
+            margin-right: 5px;
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: #FAFAFA;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            margin-left: 24px;
+            font-size: 14px;
+            padding-top:5px;
+        }
+
+        .cat-link {
+        }
+
+        .cat-link:hover {
+            background-color: #EEEEEE;
+            border-radius: 5px;
+
+
+        }
+        </style>
+        </head>
+        <body>
+
+        <button class="accordion">Проекты <span class="mda" style="float:right;color:#202020;"><a data-bs-toggle="modal" data-bs-target="#exampleModal2"><svg width="13" height="13"><path d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z" fill="currentColor" fill-rule="evenodd"></path></svg>
+        </a></span></button>
+        <div class="panel">
+            {% for category in category_list %}
+                <div class="cat-link">
+                    <p style="padding-top:5px;padding-bottom:5px;margin-left:15px;"><a href="{% url 'todo:category_detail' category.id %}" style="text-decoration:none;color:#333;font-size:14px;" >{{ category.category_name }} <span style="float:right;margin-right:15px;color:#aaa;">{{ category.task_set.count }}</span></a></p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+              panel.style.maxHeight = null;
+            } else {
+              panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+          });
+        }
+        </script>
+
+    </div>
+
+    <div class="main_view" style="position: absolute;top: 10%;left: 40%;">
+        {%block content%}{% endblock %}
+        <button data-bs-toggle="modal" data-bs-target="#exampleModal" style="border: 0; background-color: #FFFF;">
+            <a style="text-decoration: none;color: #B8B8B8"><span class="icon_add" aria-hidden="true" style="margin-right: 10px;color: red" ><svg width="13" height="13"><path d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z" fill="currentColor" fill-rule="evenodd"></path></svg></span>Добавить задачу</a>
+        </button>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+   </body>
+</html>
