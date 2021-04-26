@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:task_id>/delete/', views.delete_task, name='delete_task'),
     path('create_task_main/', views.create_task_main, name='create_task_main'),
     path('incoming/', views.incoming_task, name='incoming_task'),
+    path('<int:category_id>/delete_category/', views.delete_category, name='delete_category'),
 ]

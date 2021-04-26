@@ -68,3 +68,9 @@ def incoming_task(request):
     task = Task.objects.all()
     category = Category.objects.all()
     return render(request, 'todo/incoming.html', {'task_list': task, 'category_list': category})
+
+
+def delete_category(request, category_id):
+    category = Category.objects.get(pk=category_id)
+    category.delete()
+    return HttpResponseRedirect(reverse('todo:main_view'))
